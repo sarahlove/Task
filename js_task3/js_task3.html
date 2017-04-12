@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>IFE JavaScript Task3</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<ul id="source">
+			<li>北京空气质量：<b>90</b></li>
+			<li>上海空气质量：<b>70</b></li>
+			<li>天津空气质量：<b>80</b></li>
+			<li>广州空气质量：<b>50</b></li>
+			<li>深圳空气质量：<b>40</b></li>
+			<li>福州空气质量：<b>32</b></li>
+			<li>成都空气质量：<b>90</b></li>
+		</ul>
+		<ul id="resort">
+
+		</ul >
+		<button id="sort-btn">排序</button>
+
+		<script type="text/javascript">
+			
+			
+			//获取页面中id为source的列表的数据
+			function getData(){
+				var datasource=new Array();
+				var list_obj=document.getElementById("source").getElementsByTagName("li");
+				for(var i=0;i<list_obj.length;i++)
+				{
+					datasource[i]=new Array();			
+					datasource[i][0]=list_obj[i].innerText.slice(0,2);
+					datasource[i][1]=list_obj[i].innerText.slice(-2);
+					
+				}
+				 // alert(datasource);
+				 return datasource;
+			}
+
+			//对获取到的空气质量数据进行排序，返回排好序的数组
+			function sortAqiData(data ){
+				data.sort(function(a,b){
+					return a[1]-b[1];
+				});
+				return data;
+				// alert(data);
+
+			}
+
+			//将排好序的数据显示在列表中
+			function render(data){
+				var llistobj=document.getElementById("resort");
+				for(var b=0;b<data.length;b++)
+				{
+					llistobj.innerHTML+="<li>"+"第"+(b+1)+"名："+data[b]+"</li>";
+				}
+			}
+
+			function btnHandle(){
+				var aqiData=getData();
+				aqiData=sortAqiData(aqiData);				
+				render(aqiData);
+				this.disabled=true;
+			}
+
+			function init(){
+				//给按钮sort-btn绑定事件，点击按钮时触发btnHandle函数
+				var btn=document.getElementById("sort-btn");
+				btn.onclick=btnHandle;
+			}
+
+			init();
+		</script>
+	</body>
+</html>
