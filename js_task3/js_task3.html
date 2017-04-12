@@ -49,18 +49,21 @@
 
 			//将排好序的数据显示在列表中
 			function render(data){
+				var str="";
 				var llistobj=document.getElementById("resort");
 				for(var b=0;b<data.length;b++)
 				{
-					llistobj.innerHTML+="<li>"+"第"+(b+1)+"名："+data[b]+"</li>";
+
+					str+="<li>"+"第"+(b+1)+"名："+data[b]+"</li>";
 				}
+				llistobj.innerHTML=str;
 			}
 
 			function btnHandle(){
 				var aqiData=getData();
 				aqiData=sortAqiData(aqiData);				
 				render(aqiData);
-				this.disabled=true;
+				// this.disabled=true;
 			}
 
 			function init(){
