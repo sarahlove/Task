@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>IFE JavaScript task4</title>
+</head>
+<style type="text/css">
+	li{
+		width: 40px;
+		height: 40px;
+		background-color: red;
+		padding: 5px;
+		margin: 3px;
+		display: inline;
+	}
+</style>
+<body>
+	<form>
+		<input type="text" id="numbox">
+		<input type="button"  value="左侧进" id="btn_1">
+		<input type="button"  value="右侧进" id="btn_2">
+		<input type="button"  value="左侧出" id="btn_3">
+		<input type="button"  value="右侧出" id="btn_4">		
+	</form>
+	<div id="que">
+		<ul id="showtext">
+
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		var obj_btn1=document.getElementById("btn_1");
+		var obj_btn2=document.getElementById("btn_2");
+		var obj_btn3=document.getElementById("btn_3");
+		var obj_btn4=document.getElementById("btn_4");
+		var obj_numtext=document.getElementById("numbox");
+		var obj_showtext=document.getElementById("showtext");
+		var arr=new Array();
+
+		init();
+		//给按钮绑定事件
+		function init(){
+			obj_btn1.onclick=leftin;
+			obj_btn2.onclick=rightin;
+			obj_btn3.onclick=leftout;
+			obj_btn4.onclick=rightout;
+
+		}
+
+		function leftin(){
+			if(obj_numtext.value!=""&&!isNaN(obj_numtext.value))
+			{
+				var str2=obj_numtext.value;
+				arr.unshift(str2);
+				var llli=document.createElement("li");
+				llli.innerHTML=arr[0];
+				obj_showtext.insertBefore(llli,obj_showtext.childNodes[0]);
+				obj_numtext.value="";
+				// alert(arr);
+
+			}else{
+				alert("请输入数值！");
+			}
+		}
+		
+		function rightin(){
+			if(obj_numtext.value!=""&&!isNaN(obj_numtext.value))
+			{
+				var str1=obj_numtext.value;
+				arr.push(str1);
+				var lli=document.createElement("li");
+				lli.innerHTML=arr[arr.length-1];
+				obj_showtext.appendChild(lli);
+				obj_numtext.value="";
+				// alert(arr);
+			}
+			else{
+				alert("请输入数值！");
+			}
+
+		}
+
+		function leftout(){		
+			arr.shift(obj_showtext.childNodes[0].innerHTML);
+			obj_showtext.removeChild(obj_showtext.childNodes[0]);
+			
+		}
+
+		function rightout(){
+			arr.pop(obj_showtext.lastChild.innerHTML);
+			obj_showtext.removeChild(obj_showtext.lastChild);
+
+		}
+				
+	</script>
+
+</body>
+</html>
