@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>IFE JavaScript task5</title>
+		<meta charset="uft-8">
+		<STYLE TYPE="text/css">
+			
+		</STYLE>
+	</head>
+
+	<body>
+		<form id="form1">
+			<input type="text" id="numtext">
+			<input type="button" id="leftin" value="左侧进">
+			<input type="button" id="rightin" value="右侧进">
+			<input type="button" id="leftout" value="左侧出">
+			<input type="button" id="rightout" value="右侧出">
+			<input type="button" id="sort" value="排序">
+		</form>
+		<canvas id="rect" width="1600px"></canvas>
+
+		<script type="text/javascript">
+			
+			var leftin=document.getElementById("leftin");
+			var rightin=document.getElementById("rightin");
+			var leftout=document.getElementById("leftout");
+			var rightout=document.getElementById("rightout");
+			var sort=document.getElementById("sort");
+			var numtext=document.getElementById("numtext");
+
+			var rect=document.getElementById("rect");
+			var ctx=rect.getContext("2d");
+
+			var arr=new Array();
+
+			var width_left=20;
+			var height_total=150;
+
+			init();
+			function init(){
+				leftin.onclick=fun_leftin;
+				rightin.onclick=fun_rightin;
+				leftout.onclick=fun_leftout;
+				rightout.onclick=fun_rightout;
+				sort.onclick=fun_sort;
+			}
+
+			function fun_leftin(){
+				var str1="";
+				if(numtext.value==""||numtext.value<10||numtext.value>100)
+				{
+					alert("请输入10到100之间的数值！");
+				}else if(isNaN(numtext.value)){
+					alert("请输入数字！");
+				}
+				else{
+					for(var r=0;r<arr.length;r++)
+						{					
+							var e=width_left+r*25;
+							var f=height_total-arr[r];
+												
+							ctx.clearRect(e,f,15,arr[r]);					
+						}					
+				    str1=numtext.value;
+					arr.unshift(str1);
+					numtext.value="";
+					// alert(arr);
+					if(arr.length>60)
+					{
+						alert("元素个数已达到60个，不能继续添加！");
+					}else{
+						for(var t=0;t<arr.length;t++)
+						{
+							var xx=width_left+t*25;
+							var yy=height_total-arr[t];
+							
+							ctx.fillStyle="#FF0000";
+							ctx.fillRect(xx,yy,15,arr[t]);
+						}
+					}
+				}
+				
+			}
+
+			function fun_rightin(){
+				if(numtext.value==""||numtext.value<10||numtext.value>100)
+				{
+					alert("请输入10到100之间的数值！");
+				}else if(isNaN(numtext.value))
+				{
+					alert("请输入数字！");
+				}
+				else{
+					var str2=numtext.value;
+					arr.push(str2);
+					// alert(arr);
+					if(arr.length>60)
+					{
+						alert("元素个数已达到60个，不能继续添加！");
+					}else{
+						var a=width_left+(arr.length-1)*25;
+						var b=height_total-str2;
+						
+						ctx.fillStyle="#FF0000";
+						ctx.fillRect(a,b,15,str2);
+
+						numtext.value="";
+					}
+
+
+				}
+			}
+
+			function fun_leftout(){
+				
+				for(var o=0;o<arr.length;o++)
+				{					
+					var mm=width_left+o*25;
+					var nn=height_total-arr[o];
+										
+					ctx.clearRect(mm,nn,15,arr[o]);
+				
+				}
+				arr.shift();
+				for(var tt=0;tt<arr.length;tt++)
+				{
+					var xxx=width_left+tt*25;
+					var yyy=height_total-arr[tt];
+							
+					ctx.fillStyle="#FF0000";
+					ctx.fillRect(xxx,yyy,15,arr[tt]);
+				}
+
+			}
+
+			function fun_rightout(){
+				for(var oo=0;oo<arr.length;oo++)
+				{					
+					var mmm=width_left+oo*25;
+					var nnn=height_total-arr[oo];
+										
+					ctx.clearRect(mmm,nnn,15,arr[oo]);
+				
+				}
+				arr.pop();
+				for(var ttt=0;ttt<arr.length;ttt++)
+				{
+					var xxxx=width_left+ttt*25;
+					var yyyy=height_total-arr[ttt];
+							
+					ctx.fillStyle="#FF0000";
+					ctx.fillRect(xxxx,yyyy,15,arr[ttt]);
+				}
+			}
+
+			function fun_sort(){
+				//清除未排序时候的柱状图
+				for(var k=0;k<arr.length;k++)
+				{					
+					var m=width_left+k*25;
+					var n=height_total-arr[k];
+										
+					ctx.clearRect(m,n,15,arr[k]);
+				
+				}
+				alert("排序前的数组："+arr);
+				//对数组进行排序
+				for(var i=0;i<arr.length;i++)
+				{
+					for(var j=0;j<arr.length;j++)
+					{
+						var temp;
+						if(arr[i]<arr[j])
+						{
+							temp=arr[i];
+							arr[i]=arr[j];
+							arr[j]=temp;
+						}
+					}					
+				}
+				alert("排序后的数组:"+arr);
+
+				//将排序后的数组画到画布上
+				for(var s=0;s<arr.length;s++)
+				{
+					var x=width_left+s*25;
+					var y=height_total-arr[s];
+					
+					ctx.fillStyle="#FF0000";
+					ctx.fillRect(x,y,15,arr[s]);
+
+				}
+				
+			}
+
+		</script>
+	</body>
+</html>
