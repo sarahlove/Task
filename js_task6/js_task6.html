@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>IFE JavaScript task4</title>
+</head>
+<style type="text/css">
+	li{
+		width: 40px;
+		height: 40px;
+		background-color: red;
+		padding: 5px;
+		margin: 3px;
+		display: inline;
+	}
+</style>
+<body>
+	<form>
+		<textarea id="numbox" rows="3"></textarea>
+		<input type="button"  value="左侧进" id="btn_1">
+		<input type="button"  value="右侧进" id="btn_2">
+		<input type="button"  value="左侧出" id="btn_3">
+		<input type="button"  value="右侧出" id="btn_4">
+		<br><br>
+		<input type="text" id="chaxunText">
+		<input type="button" id="btn_chaxun" value="查询"> 
+
+	</form>
+	<div id="que">
+		<ul id="showtext">
+
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		var obj_btn1=document.getElementById("btn_1");
+		var obj_btn2=document.getElementById("btn_2");
+		var obj_btn3=document.getElementById("btn_3");
+		var obj_btn4=document.getElementById("btn_4");
+		var obj_numtext=document.getElementById("numbox");
+		var obj_showtext=document.getElementById("showtext");
+		var obj_btn_chaxun=document.getElementById("btn_chaxun");
+		var obj_chaxunText=document.getElementById("chaxunText");
+
+		var arr=new Array();
+
+		init();
+		//给按钮绑定事件
+		function init(){
+			obj_btn1.onclick=leftin;
+			obj_btn2.onclick=rightin;
+			obj_btn3.onclick=leftout;
+			obj_btn4.onclick=rightout;
+			obj_btn_chaxun.onclick=fun_chaxun;
+
+		}
+		function inputsplit(num){
+			var reg=/[^\n，,、、\s]+/g;
+			var arr_temp=num.match(reg);
+			return arr_temp;
+		}
+
+		function leftin(){
+			var arr_temp=new Array();
+			var arr_temp=inputsplit(obj_numtext.value);
+			for(var i=arr_temp.length-1;i>=0;i--)
+			{
+				arr.unshift(arr_temp[i]);
+				var llli=document.createElement("li");
+				llli.innerHTML=arr_temp[i];
+				obj_showtext.insertBefore(llli,obj_showtext.childNodes[0]);
+				obj_numtext.value="";
+			}
+			// alert(arr);			
+		}
+		
+		function rightin(){
+			var arr_temp=new Array();
+			var arr_temp=inputsplit(obj_numtext.value);
+			for(var j=0;j<arr_temp.length;j++)
+			{
+				arr.push(arr_temp[j]);
+				var lli=document.createElement("li");
+				lli.innerHTML=arr[arr.length-1];
+				obj_showtext.appendChild(lli);
+				obj_numtext.value="";
+			}		
+			// alert(arr);
+		}
+
+		function leftout(){		
+			arr.shift(obj_showtext.childNodes[0].innerHTML);
+			obj_showtext.removeChild(obj_showtext.childNodes[0]);
+			
+		}
+
+		function rightout(){
+			arr.pop(obj_showtext.lastChild.innerHTML);
+			obj_showtext.removeChild(obj_showtext.lastChild);
+
+		}
+
+		function fun_chaxun(){
+
+			var keyword=obj_chaxunText.value;
+			var obj_li=document.getElementsByTagName("li");
+			
+			if(keyword=="")
+			{
+				alert("查询内容不能为空！");
+			}
+			else
+			{
+				for(var k=0;k<obj_li.length;k++)
+				{
+					if(obj_li[k].innerHTML.indexOf(keyword)>=0)
+					{
+						obj_li[k].style.backgroundColor="green";
+
+					}
+				}
+				obj_chaxunText.value="";
+			}
+			
+		}
+				
+	</script>
+
+</body>
+</html>
